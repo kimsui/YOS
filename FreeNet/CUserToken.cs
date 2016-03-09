@@ -169,7 +169,7 @@ namespace FreeNet
 				lock (cs_count)
 				{
 					++sent_count;
-					//if (sent_count % 20000 == 0)
+					//if (sent_count % 20480 == 0)
 					{
 						Console.WriteLine(string.Format("process send : {0}, transferred {1}, sent count {2}",
 							e.SocketError, e.BytesTransferred, sent_count));

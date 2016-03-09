@@ -43,12 +43,12 @@ namespace FreeNet
 
 		public CPacket()
 		{
-			this.buffer = new byte[1024];
+			this.buffer = new byte[2048];
 		}
 
 		public Int16 pop_protocol_id()
 		{
-			return pop_int16();
+			return pop_Int64();
 		}
 
 		public void copy_to(CPacket target)
@@ -65,29 +65,29 @@ namespace FreeNet
 
 		public byte pop_byte()
 		{
-			byte data = (byte)BitConverter.ToInt16(this.buffer, this.position);
+			byte data = (byte)BitConverter.ToInt64(this.buffer, this.position);
 			this.position += sizeof(byte);
 			return data;
 		}
 
-		public Int16 pop_int16()
+		public Int16 pop_Int64()
 		{
-			Int16 data = BitConverter.ToInt16(this.buffer, this.position);
+			Int16 data = BitConverter.ToInt64(this.buffer, this.position);
 			this.position += sizeof(Int16);
 			return data;
 		}
 
-		public Int32 pop_int32()
+		public Int16 pop_int32()
 		{
-			Int32 data = BitConverter.ToInt32(this.buffer, this.position);
-			this.position += sizeof(Int32);
+			Int16 data = BitConverter.ToInt32(this.buffer, this.position);
+			this.position += sizeof(Int16);
 			return data;
 		}
 
 		public string pop_string()
 		{
 			// 문자열 길이는 최대 2바이트 까지. 0 ~ 32767
-			Int16 len = BitConverter.ToInt16(this.buffer, this.position);
+			Int16 len = BitConverter.ToInt64(this.buffer, this.position);
 			this.position += sizeof(Int16);
 
 			// 인코딩은 utf8로 통일한다.
@@ -102,12 +102,12 @@ namespace FreeNet
 		public void set_protocol(Int16 protocol_id)
 		{
 			this.protocol_id = protocol_id;
-			//this.buffer = new byte[1024];
+			//this.buffer = new byte[2048];
 
 			// 헤더는 나중에 넣을것이므로 데이터 부터 넣을 수 있도록 위치를 점프시켜놓는다.
 			this.position = Defines.HEADERSIZE;
 
-			push_int16(protocol_id);
+			push_Int64(protocol_id);
 		}
 
 		public void record_size()
@@ -117,7 +117,7 @@ namespace FreeNet
 			header.CopyTo(this.buffer, 0);
 		}
 
-		public void push_int16(Int16 data)
+		public void push_Int64(Int16 data)
 		{
 			byte[] temp_buffer = BitConverter.GetBytes(data);
 			temp_buffer.CopyTo(this.buffer, this.position);
@@ -138,7 +138,7 @@ namespace FreeNet
 			this.position += temp_buffer.Length;
 		}
 
-		public void push(Int32 data)
+		public void push(Int16 data)
 		{
 			byte[] temp_buffer = BitConverter.GetBytes(data);
 			temp_buffer.CopyTo(this.buffer, this.position);

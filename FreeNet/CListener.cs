@@ -187,16 +187,16 @@ namespace FreeNet
 			//else
 			//{
 			//	// 바디 사이즈 파싱.
-			//	Int16 body_size = BitConverter.ToInt16(state.buffer, 0);
+			//	Int16 body_size = BitConverter.ToInt64(state.buffer, 0);
 
-			//	if (body_size <= 0 || body_size > 10240)
+			//	if (body_size <= 0 || body_size > 20480)
 			//	{
 			//		state.workSocket.Close();
 			//		return;
 			//	}
 
 			//	// 프로토콜 id 파싱.
-			//	short protocol_id = BitConverter.ToInt16(state.buffer, 2);
+			//	short protocol_id = BitConverter.ToInt64(state.buffer, 2);
 			//	state.set_protocol(protocol_id);
 
 			//	state.body_size = body_size;
@@ -259,9 +259,9 @@ namespace FreeNet
 			//		//System.Buffer.BlockCopy(state.buffer, 0, clone_buffer, 0, state.body_size);
 
 			//		//CPacket msg = new CPacket(clone_buffer);
-			//		//Int32 data = msg.pop_int32();
+			//		//Int16 data = msg.pop_int32();
 
-			//		//Console.WriteLine("int32 " + data + ",   buffer : " + clone_buffer.Length);
+			//		//Console.WriteLine("Int16 " + data + ",   buffer : " + clone_buffer.Length);
 			//	}
 			//}
 		//}

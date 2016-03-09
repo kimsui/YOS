@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System.Data;
+using System.IO;
 
 namespace YOS.Pages.Inputs
 {
@@ -24,7 +25,15 @@ namespace YOS.Pages.Inputs
 	/// </summary>
 	public partial class Insert: UserControl
 	{
-		public Insert()
+        static DataTable dt= new DataTable();
+        static DataTable dt2 = new DataTable();
+        static DataSet ds;
+        static DataSet ds2;
+        static DataTable CloneDT;
+        static StringBuilder sb;
+        static StringWriter stream;
+
+        public Insert()
 		{
 			InitializeComponent();
 		}
@@ -34,11 +43,34 @@ namespace YOS.Pages.Inputs
             string strConn = "User Id=scott;Password=tiger;Data Source=ORCL";
 
             OracleDataAdapter oraDA = new OracleDataAdapter("SELECT * FROM LECTURER2", strConn);
-            DataTable dt = new DataTable();
+            //DataTable dt = new DataTable();
             oraDA.Fill(dt);
 
-            dataGrid.ItemsSource = dt.DefaultView;
+            ds = new DataSet("XMLTABLE");
 
+            CloneDT = dt.Copy();
+            CloneDT.TableName = "XMLTABLE";
+            ds.Tables.Add(CloneDT);
+
+            sb = new StringBuilder();
+            stream = new StringWriter(sb);
+            ds.WriteXml(stream, XmlWriteMode.WriteSchema);
+
+            //dt.WriteXmlSchema(stream);
+            ds2 = new DataSet();
+
+            string xmlData = stream.ToString();
+
+            System.IO.StringReader xmlSR = new System.IO.StringReader(xmlData);
+
+            //dataSet.ReadXml(xmlSR, XmlReadMode.IgnoreSchema);
+
+
+            ds2.ReadXml(xmlSR, XmlReadMode.ReadSchema);
+            dt2 = ds2.Tables["XMLTABLE"];
+
+            dataGrid.ItemsSource = dt2.DefaultView;
+            
             oraDA.Update(dt);
         }
     }
