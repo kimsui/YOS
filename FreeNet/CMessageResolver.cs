@@ -13,7 +13,7 @@ namespace FreeNet
 	/// <summary>
 	/// [header][body] 구조를 갖는 데이터를 파싱하는 클래스.
 	/// - header : 데이터 사이즈. Defines.HEADERSIZE에 정의된 타입만큼의 크기를 갖는다.
-	///				2바이트일 경우 Int16, 4바이트는 Int16로 처리하면 된다.
+	///				2바이트일 경우 Int16, 4바이트는 Int32로 처리하면 된다.
 	///				본문의 크기가 Int16.Max값을 넘지 않는다면 2바이트로 처리하는것이 좋을것 같다.
 	/// - body : 메시지 본문.
 	/// </summary>
@@ -25,7 +25,7 @@ namespace FreeNet
 		int message_size;
 
 		// 진행중인 버퍼.
-		byte[] message_buffer = new byte[2048];
+		byte[] message_buffer = new byte[1024];
 
 		// 현재 진행중인 버퍼의 인덱스를 가리키는 변수.
 		// 패킷 하나를 완성한 뒤에는 0으로 초기화 시켜줘야 한다.
@@ -156,7 +156,7 @@ namespace FreeNet
 			Type type = Defines.HEADERSIZE.GetType();
 			if (type.Equals(typeof(Int16)))
 			{
-				return BitConverter.ToInt64(this.message_buffer, 0);
+				return BitConverter.ToInt16(this.message_buffer, 0);
 			}
 
 			return BitConverter.ToInt32(this.message_buffer, 0);

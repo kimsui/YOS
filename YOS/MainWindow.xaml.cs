@@ -25,5 +25,10 @@ namespace YOS
 		{
 			InitializeComponent();
 		}
-	}
+
+        private void ModernWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+    }
 }

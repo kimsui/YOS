@@ -26,12 +26,7 @@ namespace YOS.Pages.Inputs
 	public partial class Insert: UserControl
 	{
         static DataTable dt= new DataTable();
-        static DataTable dt2 = new DataTable();
-        static DataSet ds;
-        static DataSet ds2;
-        static DataTable CloneDT;
-        static StringBuilder sb;
-        static StringWriter stream;
+
 
         public Insert()
 		{
@@ -40,38 +35,64 @@ namespace YOS.Pages.Inputs
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            string strConn = "User Id=scott;Password=tiger;Data Source=ORCL";
 
-            OracleDataAdapter oraDA = new OracleDataAdapter("SELECT * FROM LECTURER2", strConn);
-            //DataTable dt = new DataTable();
-            oraDA.Fill(dt);
+            #region DB접속 및 DT 호출 하여 화면에 출력(WriteXml/ReadXml 테스트-성공)
+            //string strConn = "User Id=scott;Password=tiger;Data Source=ORCL"; --> 서버쪽에서 디비랑 접근
 
-            ds = new DataSet("XMLTABLE");
+            //OracleDataAdapter oraDA = new OracleDataAdapter("SELECT * FROM LECTURER2", strConn);
+            ////DataTable dt = new DataTable();
+            //oraDA.Fill(dt);
 
-            CloneDT = dt.Copy();
-            CloneDT.TableName = "XMLTABLE";
-            ds.Tables.Add(CloneDT);
+            //ds = new DataSet("XMLTABLE");
 
-            sb = new StringBuilder();
-            stream = new StringWriter(sb);
-            ds.WriteXml(stream, XmlWriteMode.WriteSchema);
+            //CloneDT = dt.Copy();
+            //CloneDT.TableName = "XMLTABLE";
+            //ds.Tables.Add(CloneDT);
 
-            //dt.WriteXmlSchema(stream);
-            ds2 = new DataSet();
+            //sb = new StringBuilder();
+            //stream = new StringWriter(sb);
+            //ds.WriteXml(stream, XmlWriteMode.WriteSchema);
 
-            string xmlData = stream.ToString();
+            ////dt.WriteXmlSchema(stream);
+            //ds2 = new DataSet();
 
-            System.IO.StringReader xmlSR = new System.IO.StringReader(xmlData);
+            //string xmlData = stream.ToString();
 
-            //dataSet.ReadXml(xmlSR, XmlReadMode.IgnoreSchema);
+            //System.IO.StringReader xmlSR = new System.IO.StringReader(xmlData);
+
+            ////dataSet.ReadXml(xmlSR, XmlReadMode.IgnoreSchema);
 
 
-            ds2.ReadXml(xmlSR, XmlReadMode.ReadSchema);
-            dt2 = ds2.Tables["XMLTABLE"];
+            //ds2.ReadXml(xmlSR, XmlReadMode.ReadSchema);
+            //dt2 = ds2.Tables["XMLTABLE"];
 
-            dataGrid.ItemsSource = dt2.DefaultView;
+            //dataGrid.ItemsSource = dt2.DefaultView;
+
+            //oraDA.Update(dt); 
+            #endregion
+
+            #region  세션 연결 후 이벤트 전송(CMD - 1)
+
+            CSampleClient.Program.SrvrConn();
+            CSampleClient.Program.SendMessage("SELECT * FROM LECTURER2"); // 1test
+
+
+            #endregion
+
+            #region 메인에서 수신한 후 이쪽으로 분기 후 실행코드(CMD - 1)
+
             
-            oraDA.Update(dt);
+            dt =  CAccessDB.getdt();
+            dataGrid.ItemsSource = dt.DefaultView;
+            
+            /// string 데이터를 ReadXml 메쏘드를 사용하여 xml다시 생성
+            /// xml 을 다시 dt 로 변환
+            /// WPF 화면에 출력
+            /// 
+
+
+
+            #endregion
         }
     }
 }
