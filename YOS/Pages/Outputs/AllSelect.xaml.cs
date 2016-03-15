@@ -31,15 +31,15 @@ namespace YOS.Pages.Outputs
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            string strConn = "User Id=scott;Password=tiger;Data Source=ORCL";
+            //string strConn = "User Id=scott;Password=tiger;Data Source=ORCL";
 
-            OracleDataAdapter oraDA = new OracleDataAdapter("SELECT * FROM LECTURER2", strConn);
-            DataTable dt = new DataTable();
-            oraDA.Fill(dt);
+            //OracleDataAdapter oraDA = new OracleDataAdapter("SELECT * FROM LECTURER2", strConn);
+            //DataTable dt = new DataTable();
+            //oraDA.Fill(dt);
 
-            dataGrid.ItemsSource = dt.DefaultView;
+            //dataGrid.ItemsSource = dt.DefaultView;
 
-            oraDA.Update(dt);  
+            //oraDA.Update(dt);  
 
         }
     }
