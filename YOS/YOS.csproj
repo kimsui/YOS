@@ -62,6 +62,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CAccessDB.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Pages\Inputs\BallEventArgs.cs" />
     <Compile Include="protocol.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
