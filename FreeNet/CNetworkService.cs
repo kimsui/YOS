@@ -6,6 +6,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 
+
 namespace FreeNet
 {
     public class CNetworkService
@@ -177,7 +178,9 @@ namespace FreeNet
 				process_receive(e);
 				return;
 			}
-
+            //int aa = 100;
+            //MessageBox.Show("수신");
+            
 			throw new ArgumentException("The last operation completed on the socket was not a receive.");
 		}
 

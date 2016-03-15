@@ -20,14 +20,16 @@ using System.IO;
 
 namespace YOS.Pages.Inputs
 {
-	/// <summary>
-	/// Interaction logic for About.xaml
-	/// </summary>
-	public partial class Insert: UserControl
+    /// <summary>
+    /// Interaction logic for About.xaml
+    /// </summary>
+
+
+    public partial class Insert: UserControl
 	{
         static DataTable dt= new DataTable();
 
-
+        
         public Insert()
 		{
 			InitializeComponent();
