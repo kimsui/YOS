@@ -11,11 +11,13 @@ using System.Data;
 
 namespace CSampleClient
 {
-	using GameServer;
-
-	class Program
+    using GameServer;
+    using System.Windows.Controls;
+    class Program
 	{
 		static List<IPeer> game_servers = new List<IPeer>();
+
+        static public UserControl uc_;
 
 		static public void SrvrConn()
 		{
@@ -62,10 +64,15 @@ namespace CSampleClient
 		{
 			lock (game_servers)
 			{
-				IPeer server = new CRemoteServerPeer(server_token);
+				IPeer server = new CRemoteServerPeer(server_token, uc_);
 				game_servers.Add(server);
 				//Console.WriteLine("Connected!");
 			}
 		}
+
+        static public void SetUserControl(UserControl uc)
+        {
+            uc_ = uc;
+        }
 	}
 }

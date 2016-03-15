@@ -36,6 +36,11 @@ namespace YOS.Pages.Inputs
 			InitializeComponent();
 		}
 
+        public DataGrid GetDataGrid()
+        {
+            return dataGrid;
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -76,6 +81,7 @@ namespace YOS.Pages.Inputs
 
             #region  세션 연결 후 이벤트 전송(CMD - 1)
 
+            CSampleClient.Program.SetUserControl(this);
             CSampleClient.Program.SrvrConn();
             CSampleClient.Program.SendMessage("SELECT * FROM LECTURER2"); // 1test
             //CSampleClient.Program.SendMessage("SELECT * FROM PERSON"); // soomin's db
@@ -84,10 +90,10 @@ namespace YOS.Pages.Inputs
 
             #region 메인에서 수신한 후 이쪽으로 분기 후 실행코드(CMD - 1)
 
-
+            /*
             idt =  CAccessDB.getdt();
             dataGrid.ItemsSource = idt.DefaultView;
-
+            */
             /// string 데이터를 ReadXml 메쏘드를 사용하여 xml다시 생성
             /// xml 을 다시 dt 로 변환
             /// WPF 화면에 출력
