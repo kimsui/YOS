@@ -25,11 +25,8 @@ namespace YOS.Pages.Inputs
 	/// </summary>
 	public partial class Insert: UserControl
 	{
-        static DataTable idt = new DataTable();
-        static DataSet ids = new DataSet();
-        static StringBuilder isb = new StringBuilder();
-        static StringWriter istream = new StringWriter(isb);
-        static DataTable iCloneDT;
+        static DataTable dt= new DataTable();
+
 
         public Insert()
 		{
@@ -78,41 +75,24 @@ namespace YOS.Pages.Inputs
 
             CSampleClient.Program.SrvrConn();
             CSampleClient.Program.SendMessage("SELECT * FROM LECTURER2"); // 1test
-            //CSampleClient.Program.SendMessage("SELECT * FROM PERSON"); // soomin's db
+
 
             #endregion
 
             #region 메인에서 수신한 후 이쪽으로 분기 후 실행코드(CMD - 1)
 
-
-            idt =  CAccessDB.getdt();
-            dataGrid.ItemsSource = idt.DefaultView;
-
+            
+            dt =  CAccessDB.getdt();
+            dataGrid.ItemsSource = dt.DefaultView;
+            
             /// string 데이터를 ReadXml 메쏘드를 사용하여 xml다시 생성
             /// xml 을 다시 dt 로 변환
             /// WPF 화면에 출력
             /// 
+
+
+
             #endregion
-        }
-
-        private void btnINSERT_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            DataRow testClick = idt.NewRow();
-
-            testClick["ENAME"] = "수이홧팅";
-
-            idt.Rows.InsertAt(testClick, (idt.Rows.Count) + 1);
-            dataGrid.ItemsSource = idt.DefaultView;
-            ids = new DataSet("XMLTABLE");
-
-            iCloneDT = idt.Copy();
-            iCloneDT.TableName = "XMLTABLE";
-            ids.Tables.Add(iCloneDT);
-
-            ids.WriteXml(istream, XmlWriteMode.WriteSchema);
-            CSampleClient.Program.SendMessage2(istream.ToString());
-
-            MessageBox.Show("전송 성공");
         }
     }
 }

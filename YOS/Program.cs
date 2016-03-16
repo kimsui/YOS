@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using FreeNet;
-using Oracle.ManagedDataAccess.Client;
-using System.Data;
 
 namespace CSampleClient
 {
@@ -46,13 +44,6 @@ namespace CSampleClient
 
         //System.Threading.Thread.Sleep(1000 * 20);
         //Console.ReadKey();
-        }
-
-        static public void SendMessage2(string dtmessage)
-        {
-            CPacket msg = CPacket.create((short)PROTOCOL.CHAT_MSG_UPDATE);
-            msg.push(dtmessage);
-            game_servers[0].send(msg);
         }
         /// <summary>
         /// 접속 성공시 호출될 콜백 매소드.
